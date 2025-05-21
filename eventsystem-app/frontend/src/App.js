@@ -13,6 +13,7 @@ import Faqs from './Faqs';
 import Footer from './Footer';
 import Login from './Login';
 import Registration from './Registration';
+import DecorationList from './DecorationList';
 
 // Admin imports
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
@@ -45,6 +46,7 @@ function App() {
           <Route path="/" element={<><NavBar /><Banner /><Companydesc /><Destinationwedding /><Inquiryform /><Ourservice /><Perfectvenue /><Ourblogs /><Faqs /><Footer /></>} />
           <Route path='/login' element={<Login/>}></Route>
           <Route path='/Registration' element={<Registration/>}></Route>
+          <Route path='/DecorationList' element={<DecorationList/>}></Route>
           {/* Admin routes */}
           <Route path="/adminlogin" element={<Adminlogin/>}></Route>
           <Route path="/adminregistration" element={<AdminRegistration/>}></Route>

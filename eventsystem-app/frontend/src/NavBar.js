@@ -68,6 +68,7 @@ function NavBar(){
             <Button sx={{color: "#211C84"}}>Products</Button>
             <Button sx={{color: "#211C84"}}>Pricing</Button>
             <Button sx={{color: "#211C84"}}>Blogs</Button>
+            <Button sx={{color: "#211C84"}} onClick={()=>{navigate('/DecorationList')}}>Decorators</Button>
           </Box>
           {auth && (
             <div>
