@@ -1,6 +1,6 @@
 import { useState,useEffect } from 'react'
 import axios from 'axios';
-// import './App.css';
+import './App.css';
 import NavBar from './NavBar';
 import Banner from './Banner';
 import Companydesc from './Companydesc';
@@ -14,6 +14,9 @@ import Footer from './Footer';
 import Login from './Login';
 import Registration from './Registration';
 import DecorationList from './DecorationList';
+import AllEvents from './AllEvents';
+import CatererService from './CatererService';
+import PhotographerService from './PhotographerService';
 
 // Admin imports
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
@@ -47,6 +50,9 @@ function App() {
           <Route path='/login' element={<Login/>}></Route>
           <Route path='/Registration' element={<Registration/>}></Route>
           <Route path='/DecorationList' element={<DecorationList/>}></Route>
+          <Route path='/AllEvents' element={<AllEvents/>}></Route>
+          <Route path='/PhotographerService' element={<PhotographerService/>}></Route>
+          <Route path='/CatererService' element={<CatererService/>}></Route>
           {/* Admin routes */}
           <Route path="/adminlogin" element={<Adminlogin/>}></Route>
           <Route path="/adminregistration" element={<AdminRegistration/>}></Route>
