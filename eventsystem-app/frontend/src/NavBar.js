@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { AppBar, Box, Toolbar, IconButton, Typography, Drawer, List, ListItem, ListItemText, Divider, Button, Popover } from '@mui/material';
+import { AppBar, Box, Toolbar, IconButton, Typography, Drawer, List, ListItem, ListItemText, Button, Popover } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import CloseIcon from '@mui/icons-material/Close';
@@ -68,6 +68,7 @@ function NavBar(){
             <Button sx={{color: "#211C84"}}>Products</Button>
             <Button sx={{color: "#211C84"}}>Pricing</Button>
             <Button sx={{color: "#211C84"}}>Blogs</Button>
+            <Button sx={{color: "#211C84"}} onClick={()=>{navigate('/DecorationList')}}>Decorators</Button>
           </Box>
           {auth && (
             <div>
