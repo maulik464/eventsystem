@@ -1,10 +1,19 @@
-import React, { useState } from "react";
-import { CssBaseline, Container, Typography, TextField, Box, Button, FormControl, FormLabel } from "@mui/material";
+import React, { useState, useEffect } from "react";
+import { CssBaseline, Container, Typography, TextField, Box, Button, FormControl, Table, TableHead, TableRow, TableCell, TableBody, Snackbar, Alert, Dialog, Stack} from "@mui/material";
 import Textarea from '@mui/joy/Textarea';
+import EditIcon from "@mui/icons-material/Edit";
+import DeleteIcon from "@mui/icons-material/Delete";
 import axios from 'axios';
 
 function IntroEvents() {
     const [data, setData] = useState({});
+    const [record, setRecord] = useState([]);
+    const [selectedDeleteId, setSelectedDeleteId] = useState(null);
+    const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
+    const [update, doUpdate] = useState(false);
+    const [openSnackbar, setOpenSnackbar] = useState(false);
+    const [snackbarMessage, setSnackbarMessage] = useState("");
+    const [snackbarSeverity, setSnackbarSeverity] = useState("success");
 
     const handleInput = (e) => {
         setData({ ...data, [e.target.name]: e.target.value });
@@ -14,13 +23,96 @@ function IntroEvents() {
         try {
             const res = await axios.post('http://localhost:5000/introevents/createIntroEvent', data);
             console.log("Create Response", res);
+
+            if (res.data.isSuccess) {
+                setSnackbarSeverity("success");
+                setSnackbarMessage(res.data.msg);
+                setOpenSnackbar(true);
+                await getContentData();
+                doUpdate(!update);
+            } else {
+                setSnackbarSeverity("error");
+                setSnackbarMessage("Error: " + res.data.msg);
+                setOpenSnackbar(true);
+            }
         } catch (error) {
             console.error("Error submitting data:", error);
+            setSnackbarSeverity("error");
+            setSnackbarMessage("An error occurred while submitting the data.");
+            setOpenSnackbar(true);
         }
     }
 
+    const getContentData = async () => {
+        try {
+            const getContent = await axios.get('http://localhost:5000/introevents/getIntroEvent')
+            console.log("Get Content Data", getContent.data)
+            const contentData = getContent.data.data || [];
+            setRecord(contentData);
+            doUpdate(!update);
+        } catch (error) {
+            console.log("Data Fatching Error", error)
+        }
+    }
+
+    useEffect(() => {
+        getContentData();
+    }, []);
+
+const handleConfirmDelete = async () => {
+    try {
+        await axios.delete(`http://localhost:5000/introevents/deleteIntroEvent/${selectedDeleteId}`);
+        setSnackbarSeverity("success");
+        setSnackbarMessage("Event deleted successfully!");
+        setOpenSnackbar(true);
+        await getContentData(); // Reload data after deletion
+        doUpdate(!update);
+    } catch (error) {
+        console.error("Error deleting data:", error);
+        setSnackbarSeverity("error");
+        setSnackbarMessage(error.response?.data?.msg || "Error deleting event.");
+        setOpenSnackbar(true);
+    } finally {
+        setDeleteDialogOpen(false);
+        setSelectedDeleteId(null);
+    }
+};
+
+
+
+
+    const confirmDelete = (id) => {
+        setSelectedDeleteId(id);
+        setDeleteDialogOpen(true);
+    };
+
     return (
         <div>
+            <Dialog
+        open={deleteDialogOpen}
+        onClose={() => setDeleteDialogOpen(false)}
+      >
+        <Box sx={{ padding: 3, width: 300 }}>
+          <Typography variant="h5" gutterBottom>
+            Delete Confirmation
+          </Typography>
+          <Typography variant="body1" gutterBottom>
+            Are you sure you want to delete this expense?
+          </Typography>
+          <Stack direction="row" justifyContent="flex-end" spacing={2} mt={2}>
+            <Button onClick={() => setDeleteDialogOpen(false)} color="primary">
+              Cancel
+            </Button>
+            <Button
+              onClick={handleConfirmDelete}
+              color="error"
+              variant="contained"
+            >
+              Delete
+            </Button>
+          </Stack>
+        </Box>
+      </Dialog>
             <CssBaseline />
             <Container
                 sx={{
@@ -49,13 +141,13 @@ function IntroEvents() {
                         Add Content
                     </Typography>
                     <FormControl>
-                        <FormLabel>Your comment</FormLabel>
                         <Textarea
                             placeholder="Type something here…"
                             minRows={3}
                             name="comment"
                             onChange={handleInput}
                             sx={{
+                                height: "125px",
                                 width: "400px",
                                 marginTop: "20px",
                             }}
@@ -83,7 +175,7 @@ function IntroEvents() {
                                 marginTop: '30px',
                                 margin: '20px',
                                 backgroundColor: "#211C84",
-                                marginLeft:"0px"
+                                marginLeft: "0px"
                             }}
                         >
                             Submit Content
@@ -91,6 +183,60 @@ function IntroEvents() {
                     </FormControl>
                 </Box>
             </Container>
+
+            <Table sx={{ marginTop: "20px", width: "80%", overflowX: "auto", marginLeft: "185px" }}>
+                <TableHead>
+                    <TableRow>
+                        <TableCell sx={{ textAlign: "center", fontWeight: "bold" }}>Content</TableCell>
+                        <TableCell sx={{ fontWeight: "bold" }}>Youtube Link</TableCell>
+                        <TableCell sx={{ textAlign: "center", fontWeight: "bold" }}>Edit</TableCell>
+                        <TableCell sx={{ textAlign: "center", fontWeight: "bold" }}>Delete</TableCell>
+                    </TableRow>
+                </TableHead>
+                <TableBody>
+                    {Array.isArray(record) && record.length > 0 ? (
+                        record.map((item) => (
+                            <TableRow key={item._id}>
+                                <TableCell sx={{ maxWidth: 200, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+                                    {item.comment.length > 50 ? item.comment.substring(0, 50) + "..." : item.comment}
+                                </TableCell>
+                                <TableCell><a href={item.youtubelink} target="_blank">{item.youtubelink}</a></TableCell>
+                                <TableCell sx={{ textAlign: "center" }}>
+                                    <Button
+                                        startIcon={<EditIcon />}
+                                        variant="outlined"
+                                    />
+                                </TableCell>
+                                <TableCell sx={{ textAlign: "center" }}>
+                                    <Button
+                                        sx={{ color: "red" }}
+                                        onClick={() => confirmDelete(item._id)}
+                                        startIcon={<DeleteIcon />}
+                                        variant="outlined"
+                                    />
+                                </TableCell>
+                            </TableRow>
+                        ))
+                    ) : (
+                        <TableRow>
+                            <TableCell colSpan={4} align="center">
+                                No data available
+                            </TableCell>
+                        </TableRow>
+                    )}
+                </TableBody>
+            </Table>
+
+            {/* Snackbar for messages */}
+            <Snackbar
+                open={openSnackbar}
+                autoHideDuration={6000}
+                onClose={() => setOpenSnackbar(false)}
+            >
+                <Alert onClose={() => setOpenSnackbar(false)} severity={snackbarSeverity} sx={{ width: '100%' }}>
+                    {snackbarMessage}
+                </Alert>
+            </Snackbar>
         </div>
     );
 }
