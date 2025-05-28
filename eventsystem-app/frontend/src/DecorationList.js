@@ -1,21 +1,11 @@
 import React, { useState } from 'react';
-import Card from '@mui/material/Card';
-import CardActions from '@mui/material/CardActions';
-import CardContent from '@mui/material/CardContent';
-import CardMedia from '@mui/material/CardMedia';
-import Button from '@mui/material/Button';
-import Typography from '@mui/material/Typography';
-import Box from '@mui/material/Box';
-import Container from '@mui/material/Container';
-import Dialog from '@mui/material/Dialog';
-import DialogTitle from '@mui/material/DialogTitle';
-import DialogContent from '@mui/material/DialogContent';
-import IconButton from '@mui/material/IconButton';
+import { Card, CardActions, CardContent, CardMedia, Button, Typography, Box, Container, Dialog, DialogTitle, 
+  DialogContent, IconButton} from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
+import NavBar from "./NavBar";
 //import 'slick-carousel/slick/slick-theme.css';
-
 
 function DecorationList() {
   let decorationData = [
@@ -119,26 +109,29 @@ function DecorationList() {
 
   return (    
     <Container>
-      <Typography variant="h3">Decorator List</Typography>
-        <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 2, justifyContent: "center" }}>
-          {decorationData.map((val) => (
-            <Card key={val.id} sx={{ maxWidth: 345, flexBasis: "30%"}}>
-              <Box sx={{ width: "100%", height: 140, overflow: "hidden" }}>
-                <CardMedia component="img" sx={{ width: "100%", height: "100%", objectFit: "cover" }} 
-                image={val.img} />
-              </Box>  
-              <CardContent>
-                <Typography gutterBottom variant="h5">{val.name}</Typography>
-                <Typography variant="body2" color="text.secondary">
-                  Elegant decorations for events.
-                </Typography>
-              </CardContent>
-              <CardActions>
-                <Button size="small" onClick={() => handleOpen(val)}>Learn More</Button>
-              </CardActions>
-            </Card>
-          ))}
-        </Box>
+      <NavBar/>
+      <Typography variant="h3" align="center" sx={{ marginTop: "10px", marginBottom: "10px", fontWeight: "bold" }}>
+        Decorator List
+      </Typography>
+      <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 2, justifyContent: "center", padding: 3 }}>
+        {decorationData.map((val) => (
+          <Card key={val.id} sx={{ maxWidth: 345, flexBasis: "30%"}}>
+            <Box sx={{ width: "100%", height: 140, overflow: "hidden" }}>
+              <CardMedia component="img" sx={{ width: "100%", height: "100%", objectFit: "cover", borderRadius: "8px 8px 0 0" }} 
+              image={val.img} />
+            </Box>
+            <CardContent>
+              <Typography gutterBottom variant="h5">{val.name}</Typography>
+              <Typography variant="body2" color="text.secondary">
+                {val.details}
+              </Typography>
+            </CardContent>
+            <CardActions>
+              <Button size="small" onClick={() => handleOpen(val)}>Learn More</Button>
+            </CardActions>
+          </Card>
+        ))}
+      </Box>
 
       {/* Popup Modal */}
       <Dialog open={open} onClose={handleClose} maxWidth="md" fullWidth>
