@@ -48,7 +48,7 @@ const CatererService = () => {
   };
 
   const gallerySettings = {
-    arrows: false,
+    arrows: true,
     infinite: true,
     slidesToShow: 2,
     slidesToScroll: 1,
