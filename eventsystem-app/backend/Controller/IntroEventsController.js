@@ -37,24 +37,25 @@ const getIntroEvent = (req, res) => {
         });
 };
 
-const deleteIntroEvent = (req, res) => {
-    // Access the ID from the URL params
-    const commentId = req.params.Commentid;
-    console.log('Received ID:', commentId);
+const updateIntroEvent = (req, res) => {
+    IntroEvents.updateOne({_id : req.query.CommentId},req.body)
+    .then((data) => {
+        res.send({isSuccess: true, msg: "Event updated successfully!"})
+    })
+    .catch((err) => {
+        res.send({msg:"Data Update Failed"})
+    })
+}
 
-    // Perform the delete operation
-    IntroEvents.deleteOne({ _id: commentId })
-        .then((data) => {
-            if (data.deletedCount > 0) {
-                res.send({ msg: "Data Deleted", data });
-            } else {
-                res.status(404).send({ msg: "Data not found" });
-            }
-        })
-        .catch((err) => {
-            res.status(500).send({ msg: "Data not Deleted", err });
-        });
+const deleteIntroEvent = (req, res) => {
+  IntroEvents.deleteOne({ _id: req.query.CommentId })
+    .then((data) => {
+      res.send({ msg: "Data Deleted", data });
+    })
+    .catch((err) => {
+      res.status(500).send({ msg: "Delete failed", err });
+    });
 };
 
 
-module.exports = {createIntroEvent,getIntroEvent,deleteIntroEvent}
+module.exports = {createIntroEvent,getIntroEvent,updateIntroEvent,deleteIntroEvent}

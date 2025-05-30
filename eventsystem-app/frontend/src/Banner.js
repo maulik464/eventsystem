@@ -17,7 +17,7 @@ function Banner () {
         setRecord(bannersData);
         doUpdate(!update);
       } catch (error) {
-        console.error("Error fetching expense data:", error);
+        console.error("Error fetching banner data:", error);
       }
     }
   
