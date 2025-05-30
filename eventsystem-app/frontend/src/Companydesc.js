@@ -38,7 +38,8 @@ function Companydesc() {
                             <div className="embed-responsive embed-responsive-16by9" style={{ height: '100%', borderRadius: '15px' }}>
                                 <iframe
                                     className="embed-responsive-item"
-                                    src='https://www.youtube.com/embed/qV-tFfNPsB8?si=UYsdhAMYCyabKyPl'
+                                    // src='https://www.youtube.com/embed/qV-tFfNPsB8?si=UYsdhAMYCyabKyPl'
+                                    src={records.youtubelink}
                                     frameBorder='0'
                                     allow='autoplay; encrypted-media'
                                     allowFullScreen

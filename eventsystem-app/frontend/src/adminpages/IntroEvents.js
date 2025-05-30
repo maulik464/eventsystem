@@ -162,6 +162,7 @@ function IntroEvents() {
                         bgcolor: "white",
                         border: "2px solid white",
                         width: "740px",
+                        height:"380px"
                     }}
                 >
                     <Typography
@@ -201,7 +202,10 @@ function IntroEvents() {
                                 margin: "20px 0",
                             }}
                         />
-                        <Stack direction="row" spacing={2} alignItems="center">
+                        <Typography sx={{marginTop:"-20px", marginRight:"185px"}}>
+                           Note:  Please Enter Only Embed Url
+                        </Typography>
+                        <Stack direction="row" spacing={2} alignItems="center" sx={{marginTop:"30px"}}>
                             <Button
                                 type="submit"
                                 variant="contained"
