@@ -232,7 +232,7 @@ header {
 }
 
 .sidebar-submenu {
-    padding-left: 10px;
+    padding-left: 0px;
     display: none;
     flex-direction: column;
 }

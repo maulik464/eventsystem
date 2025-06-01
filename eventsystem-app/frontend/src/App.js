@@ -27,6 +27,7 @@ import Adminlogin from './adminpages/Adminlogin';
 import AdminPrivateAuth from './adminpages/AdminPrivateAuth';
 import AdminRegistration from './adminpages/AdminRegistration';
 import IntroEvents from './adminpages/IntroEvents';
+import WeddingDestination from './adminpages/WeddingDestination';
 
 function App() {
   const [data, setData] = useState('');
@@ -60,6 +61,7 @@ function App() {
           </Route>
           <Route path="/admin/mainbanner" element={<><Dashboard /><AdminNavBar /><Mainbanner /></>}></Route>
           <Route path="/admin/introevents" element={<><Dashboard /><AdminNavBar /><IntroEvents/></>}></Route>
+          <Route path="/admin/weddingdestination" element={<><Dashboard /><AdminNavBar /><WeddingDestination/></>}></Route>
         </Routes>
       </Router>
     </div>

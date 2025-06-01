@@ -30,7 +30,7 @@ import axios from "axios";
 function Mainbanner() {
   const [textField, setTextField] = useState("");
   const [file, setFile] = useState(null);
-  const [bannerposition,setBannerPosition] = useState("")
+  const [bannerposition, setBannerPosition] = useState("")
   const [record, setRecord] = useState([]);
   const [open, setOpen] = useState(false);
   const [update, doUpdate] = useState(false);
@@ -70,7 +70,7 @@ function Mainbanner() {
     const formData = new FormData();
     formData.append("text", textField);
     formData.append("file", file);
-    formData.append("bannerposition",bannerposition)
+    formData.append("bannerposition", bannerposition)
 
     try {
       const addRes = await axios.post(
@@ -162,7 +162,7 @@ function Mainbanner() {
             sx={{
               // width:"800px",
               boxShadow: "0px 4px 12px rgba(0, 0, 0, 0.1)",
-              marginLeft:'0px'
+              marginLeft: '0px'
             }}
           >
             <Box
@@ -183,69 +183,81 @@ function Mainbanner() {
               >
                 Add New Banner
               </Typography>
-                    <TextField
-                      label="Enter Image Text"
-                      variant="outlined"
-                      fullWidth
-                      value={textField}
-                      onChange={handleTextChange}
-                      sx={{
-                        
-                         width: '350px',
-                         marginTop:'30px',
-                        margin:'20px'
-                      }}
-                    />
-                  <TextField
-                      label="Enter Banner Position"
-                      variant="outlined"
-                      fullWidth
-                      value={bannerposition}
-                      onChange={handleBannerPositiom}
-                      sx={{
-                       
-                        width: '350px',
-                        marginTop:'30px',
-                        margin:'20px'
-                      }}
-                    />
-                  {/* Upload File Button */}
-                    <Button
-                      component="label"
-                      variant="contained"
-                      startIcon={<CloudUploadIcon />}
-                      fullWidth
-                      sx={{
-                        height: '40px',
-                        width:'350px',
-                        marginTop:'30px',
-                        margin:'20px',
-                        fontSize: '14px',
-                       backgroundColor: "#211C84",
-                      }}
-                    >
-                      Upload File
-                      <VisuallyHiddenInput type="file" onChange={handleFileChange} />
-                    </Button>
+              <TextField
+                label="Enter Image Text"
+                variant="outlined"
+                fullWidth
+                value={textField}
+                onChange={handleTextChange}
+                sx={{
 
-                  {/* Submit Button */}
-                    <Button
-                      variant="contained"
-                      color="primary"
-                      onClick={handleSubmit}
-                      fullWidth
-                      sx={{
-                        height: '40px',
-                        fontSize: '14px',
-                        marginTop:'30px',
-                        margin:'20px',
-                        width:'350px',
-                        backgroundColor: "#211C84",
-                      }}
-                    >
-                      Submit
-                    </Button>
-              </Box>
+                  width: '350px',
+                  marginTop: '30px',
+                  margin: '20px'
+                }}
+              />
+              <TextField
+                label="Enter Banner Position"
+                variant="outlined"
+                fullWidth
+                value={bannerposition}
+                onChange={handleBannerPositiom}
+                sx={{
+
+                  width: '350px',
+                  marginTop: '30px',
+                  margin: '20px'
+                }}
+              />
+              {/* Upload File Button */}
+              <Button
+                component="label"
+                variant="contained"
+                startIcon={<CloudUploadIcon />}
+                fullWidth
+                sx={{
+                  height: '40px',
+                  width: '350px',
+                  marginTop: '30px',
+                  margin: '20px',
+                  fontSize: '14px',
+                  backgroundColor: "#211C84",
+                }}
+              >
+                Upload File
+                <VisuallyHiddenInput type="file" onChange={handleFileChange} />
+              </Button>
+              
+              {/* Submit Button */}
+              <Button
+                variant="contained"
+                color="primary"
+                onClick={handleSubmit}
+                fullWidth
+                sx={{
+                  height: '40px',
+                  fontSize: '14px',
+                  marginTop: '30px',
+                  margin: '20px',
+                  width: '350px',
+                  backgroundColor: "#211C84",
+                }}
+              >
+                Submit
+              </Button>
+            </Box>
+            {file && (
+                <Box sx={{ display: "flex", alignItems: "center", marginLeft: "24px", marginTop: "2px" }}>
+                  {/* <img
+                    src={URL.createObjectURL(file)}
+                    alt="Preview"
+                    style={{ width: 50, height: 50, objectFit: "cover", marginRight: "10px" }}
+                  /> */}
+                  <Typography variant="body2">
+                    Selected file: <strong>{file.name}</strong>
+                  </Typography>
+                </Box>
+              )}
           </Container>
         </React.Fragment>
       </Dialog>
@@ -279,7 +291,7 @@ function Mainbanner() {
           width: "800px",
           height: "auto",
           boxShadow: "0px 4px 12px rgba(0, 0, 0, 0.5)",
-          marginLeft:"370px"
+          marginLeft: "370px"
         }}
       >
         <Box
@@ -300,7 +312,7 @@ function Mainbanner() {
                 width: "200px",
                 fontSize: 20,
                 backgroundColor: "#211C84",
-                marginTop:'20px'
+                marginTop: '20px'
               }}
               onClick={() => {
                 handleClickOpen();
@@ -336,18 +348,18 @@ function Mainbanner() {
                   <TableRow key={item._id}>
                     <TableCell>{item.imagetext}</TableCell>
                     <TableCell>
-                      {item.image &&(
+                      {item.image && (
                         <img
                           src={`http://localhost:5000/uploads/${item.image}`}
                           alt="Preview"
                           style={{ width: "50px", height: "50px", objectFit: "contain" }}
                         />
-                      ) }
+                      )}
                     </TableCell>
                     <TableCell>{item.bannerposition}</TableCell>
                     <TableCell>
                       <Button
-                      sx={{color: "#211C84",}}
+                        sx={{ color: "#211C84", }}
                         onClick={() => handleEdit(item)}
                         startIcon={<EditIcon />}
                       />
