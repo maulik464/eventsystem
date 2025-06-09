@@ -5,6 +5,7 @@ require('./dbconfig')
 const UserRoutes = require('./Router/AdminUserRoute');
 const Mainbanner = require('./Router/MainBannerRoute');
 const IntroEvents = require('./Router/IntroEventsRoute');
+const WeddingDestination = require('./Router/WeddingDestinationRoute')
 
 let app = express();
 app.use(cors());
@@ -13,6 +14,7 @@ app.use('/uploads', express.static('uploads'));
 app.use('/adminuser',UserRoutes)
 app.use('/mainbanner',Mainbanner)
 app.use('/introevents',IntroEvents)
+app.use('./weddingdestination',WeddingDestination)
 
 app.get('/', (req, res) => {
     try{

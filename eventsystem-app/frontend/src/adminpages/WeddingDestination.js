@@ -3,18 +3,42 @@ import {
     Box,
     Button,
     Dialog,
-    TextField,
     Typography,
-    CssBaseline,
-    Container
+    CssBaseline
 } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
+import axios from "axios";
 
 function WeddingDestination() {
     const [open, setOpen] = useState(false);
-    const [bannerPosition, setBannerPosition] = useState("");
     const [file, setFile] = useState(null);
+    const [update, doUpdate] = useState(false);
+
+    const handleSubmit = async () => {
+    
+        const formData = new FormData();
+        formData.append("file", file);
+    
+        try {
+          const addRes = await axios.post(
+            "http://localhost:5000/weddingdestination/addSlider1Image",
+            formData,
+            {
+              headers: {
+                "Content-Type": "multipart/form-data",
+              },
+            }
+          );
+          console.log("Create Response", addRes.data);
+        } catch (error) {
+          console.error("Error submitting data:", error);
+        }
+        setOpen(false);
+        // await getBanners();
+        doUpdate(!update);
+        // setIsEditMode(false);
+      };
 
     const VisuallyHiddenInput = styled("input")({
         clip: "rect(0 0 0 0)",
@@ -40,10 +64,6 @@ function WeddingDestination() {
         setFile(event.target.files[0]);
     };
 
-    const handleBannerPositionChange = (event) => {
-        setBannerPosition(event.target.value);
-    };
-
     return (
         <>
             <CssBaseline />
@@ -61,15 +81,6 @@ function WeddingDestination() {
                     <Typography variant="h5" sx={{ mb: 3 }}>
                         Add Slider 1 Images
                     </Typography>
-
-                    <TextField
-                        label="Enter Banner Position"
-                        fullWidth
-                        value={bannerPosition}
-                        onChange={handleBannerPositionChange}
-                        sx={{ mb: 2 }}
-                    />
-
                     <Button
                         component="label"
                         variant="contained"
@@ -87,149 +98,11 @@ function WeddingDestination() {
                         </Typography>
                     )}
 
-                    <Button variant="contained" color="primary" fullWidth>
+                    <Button variant="contained" onClick={handleSubmit} color="primary" fullWidth>
                         Submit
                     </Button>
                 </Box>
-            </Dialog>
-
-            {/* slider 2 Dialog */}
-
-            <CssBaseline />
-            <Box sx={{ p: 4,marginTop:"30px" }}>
-                <Button variant="contained" onClick={handleClickOpen}>
-                   Slider 2
-                </Button>
-            </Box>
-
-            <Dialog open={open} onClose={handleClose} fullWidth maxWidth="sm">
-                <Box sx={{ p: 4 }}>
-                    <Typography variant="h5" sx={{ mb: 3 }}>
-                        Add Slider 2 Images
-                    </Typography>
-
-                    <TextField
-                        label="Enter Banner Position"
-                        fullWidth
-                        value={bannerPosition}
-                        onChange={handleBannerPositionChange}
-                        sx={{ mb: 2 }}
-                    />
-
-                    <Button
-                        component="label"
-                        variant="contained"
-                        startIcon={<CloudUploadIcon />}
-                        fullWidth
-                        sx={{ mb: 2 }}
-                    >
-                        Upload File
-                        <VisuallyHiddenInput type="file" onChange={handleFileChange} />
-                    </Button>
-
-                    {file && (
-                        <Typography variant="body2" sx={{ mb: 2 }}>
-                            Selected file: <strong>{file.name}</strong>
-                        </Typography>
-                    )}
-
-                    <Button variant="contained" color="primary" fullWidth>
-                        Submit
-                    </Button>
-                </Box>
-            </Dialog>
-
-            {/* Slider 3 Dialog */}
-
-            <CssBaseline />
-            <Box sx={{ p: 4,marginTop:"30px" }}>
-                <Button variant="contained" onClick={handleClickOpen}>
-                   Slider 3
-                </Button>
-            </Box>
-
-            <Dialog open={open} onClose={handleClose} fullWidth maxWidth="sm">
-                <Box sx={{ p: 4 }}>
-                    <Typography variant="h5" sx={{ mb: 3 }}>
-                        Add Slider 3 Images
-                    </Typography>
-
-                    <TextField
-                        label="Enter Banner Position"
-                        fullWidth
-                        value={bannerPosition}
-                        onChange={handleBannerPositionChange}
-                        sx={{ mb: 2 }}
-                    />
-
-                    <Button
-                        component="label"
-                        variant="contained"
-                        startIcon={<CloudUploadIcon />}
-                        fullWidth
-                        sx={{ mb: 2 }}
-                    >
-                        Upload File
-                        <VisuallyHiddenInput type="file" onChange={handleFileChange} />
-                    </Button>
-
-                    {file && (
-                        <Typography variant="body2" sx={{ mb: 2 }}>
-                            Selected file: <strong>{file.name}</strong>
-                        </Typography>
-                    )}
-
-                    <Button variant="contained" color="primary" fullWidth>
-                        Submit
-                    </Button>
-                </Box>
-            </Dialog>
-
-            {/* Slider 4 Dialog */}
- 
-            <CssBaseline />
-            <Box sx={{ p: 4,marginTop:"30px" }}>
-                <Button variant="contained" onClick={handleClickOpen}>
-                   Slider 4
-                </Button>
-            </Box>
-
-            <Dialog open={open} onClose={handleClose} fullWidth maxWidth="sm">
-                <Box sx={{ p: 4 }}>
-                    <Typography variant="h5" sx={{ mb: 3 }}>
-                        Add Slider 4 Images
-                    </Typography>
-
-                    <TextField
-                        label="Enter Banner Position"
-                        fullWidth
-                        value={bannerPosition}
-                        onChange={handleBannerPositionChange}
-                        sx={{ mb: 2 }}
-                    />
-
-                    <Button
-                        component="label"
-                        variant="contained"
-                        startIcon={<CloudUploadIcon />}
-                        fullWidth
-                        sx={{ mb: 2 }}
-                    >
-                        Upload File
-                        <VisuallyHiddenInput type="file" onChange={handleFileChange} />
-                    </Button>
-
-                    {file && (
-                        <Typography variant="body2" sx={{ mb: 2 }}>
-                            Selected file: <strong>{file.name}</strong>
-                        </Typography>
-                    )}
-
-                    <Button variant="contained" color="primary" fullWidth>
-                        Submit
-                    </Button>
-                </Box>
-            </Dialog>
+            </Dialog> 
         </>
     );
 }
