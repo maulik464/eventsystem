@@ -42,6 +42,7 @@ function AdminNavBar() {
                                 <li><Link to="/admin/mainbanner">Main Banner</Link></li>
                                 <li><Link to="/admin/introevents">Intro Events</Link></li>
                                 <li><Link to="/admin/weddingdestination">Destination Wedding</Link></li>
+                                <li><Link to="/admin/decorators">Decorators List</Link></li>
                             </ul>
                         </div>
                     )}

@@ -6,6 +6,7 @@ const UserRoutes = require('./Router/AdminUserRoute');
 const Mainbanner = require('./Router/MainBannerRoute');
 const IntroEvents = require('./Router/IntroEventsRoute');
 const WeddingDestination = require('./Router/WeddingDestinationRoute')
+const Decorators = require('./Router/DecoratorsRoute');
 
 let app = express();
 app.use(cors());
@@ -15,6 +16,7 @@ app.use('/adminuser',UserRoutes)
 app.use('/mainbanner',Mainbanner)
 app.use('/introevents',IntroEvents)
 app.use('./weddingdestination',WeddingDestination)
+app.use('/decorators',Decorators)
 
 app.get('/', (req, res) => {
     try{
